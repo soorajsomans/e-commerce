@@ -1,6 +1,7 @@
 package com.syntacticsuger.productservice.services;
 
 import com.syntacticsuger.productservice.dtos.FakeStoreProductDto;
+import com.syntacticsuger.productservice.exceptions.ProductNotFoundException;
 import com.syntacticsuger.productservice.models.Category;
 import com.syntacticsuger.productservice.models.Product;
 import org.springframework.http.HttpMethod;
@@ -46,10 +47,10 @@ public class FakeStoreProductService implements ProductService{
         return prodToFakeStoreDto;
     }
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(Long id) throws ProductNotFoundException {
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+ id, FakeStoreProductDto.class);
         if(null == fakeStoreProductDto){
-            return null;
+            throw new ProductNotFoundException("Product with id "+id + " not found!");
         }
         return convertFakeStoreDtoToProduct(fakeStoreProductDto);
     }

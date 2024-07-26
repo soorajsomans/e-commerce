@@ -1,6 +1,7 @@
 package com.syntacticsuger.productservice.services;
 
 import com.syntacticsuger.productservice.ProductServiceApplication;
+import com.syntacticsuger.productservice.exceptions.ProductNotFoundException;
 import com.syntacticsuger.productservice.models.Product;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    Product getProductById(Long id);
+    Product getProductById(Long id) throws ProductNotFoundException;
 
     List<Product> getAllProducts();
 

@@ -1,7 +1,10 @@
 package com.syntacticsuger.productservice.controllers;
 
+import com.syntacticsuger.productservice.exceptions.ProductNotFoundException;
 import com.syntacticsuger.productservice.models.Product;
 import com.syntacticsuger.productservice.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,8 +21,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") Long id){
-        return productService.getProductById(id);
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+
+        Product product =  productService.getProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @GetMapping()
